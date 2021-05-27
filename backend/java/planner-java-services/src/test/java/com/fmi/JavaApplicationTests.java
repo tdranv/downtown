@@ -1,10 +1,10 @@
-package com.fmi.weatherservice;
+package com.fmi;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class WeatherServiceApplicationTests {
+class JavaApplicationTests {
 
     @Test
     void contextLoads() {
