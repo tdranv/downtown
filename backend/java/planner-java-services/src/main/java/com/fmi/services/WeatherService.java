@@ -1,4 +1,4 @@
-package com.fmi.weatherservice.services;
+package com.fmi.services;
 
 import java.io.IOException;
 

@@ -1,4 +1,4 @@
-package com.fmi.weatherservice.services;
+package com.fmi.services;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
