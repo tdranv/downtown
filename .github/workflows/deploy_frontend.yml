@@ -18,17 +18,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@main
-    - uses: borales/actions-yarn@v2.0.0
     - name: Use Node.js ${{ env.NODE_VERSION }}
       uses: actions/setup-node@v1
       with:
         node-version: ${{ env.NODE_VERSION }}
-    - name: yarn install, build
+    - name: install and build
       run: |
         # Build and test the project, then
         # deploy to Azure Web App.
-        yarn install
-        yarn build
+        npm run install
+        npm run build
       working-directory: my-app-path
     - name: 'Deploy to Azure WebApp'
       uses: azure/webapps-deploy@v2
