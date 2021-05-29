@@ -15,22 +15,24 @@ env:
 
 jobs:
   build-and-deploy:
-    - name: Make space
-      run: |
-        sudo rm -rf "/usr/local/share/boost"
-        sudo rm -rf "$AGENT_TOOLSDIRECTORY"
+    name: Make space
+    run: |
+      # Cleanup space for ubuntu
+      sudo rm -rf "/usr/local/share/boost"
+      sudo rm -rf "$AGENT_TOOLSDIRECTORY"
     name: Build and Deploy
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@main
-    - uses: actions/setup-node@v1
+    - name: Use Node.js ${{ env.NODE_VERSION }
+      uses: actions/setup-node@v1
       with:
         node-version: ${{ env.NODE_VERSION }}
-    - name: install and build
+    - name: npm install, build
       run: |
         # Build and test the project, then
         # deploy to Azure Web App.
-        npm run install
+        npm install
         npm run build
       working-directory: my-app-path
     - name: 'Deploy to Azure WebApp'
