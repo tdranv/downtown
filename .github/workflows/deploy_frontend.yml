@@ -10,11 +10,15 @@ on: ['push']
 
 env:
   AZURE_WEBAPP_NAME: downtown-frontend
-  AZURE_WEBAPP_PACKAGE_PATH: './frontend/build' 
+  AZURE_WEBAPP_PACKAGE_PATH: 'frontend' 
   NODE_VERSION: '14.x'
 
 jobs:
   build-and-deploy:
+    - name: Make space
+      run: |
+        sudo rm -rf "/usr/local/share/boost"
+        sudo rm -rf "$AGENT_TOOLSDIRECTORY"
     name: Build and Deploy
     runs-on: ubuntu-latest
     steps:
