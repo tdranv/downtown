@@ -1,4 +1,4 @@
-package com.fmi.services;
+package com.downtown.services;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -26,7 +26,7 @@ public class WeatherServiceImpl implements WeatherService {
     public String getWeatherForCity(String cityName) throws IOException, InterruptedException {
         var client = HttpClient.newHttpClient();
         var request = HttpRequest.newBuilder(
-                URI.create(format("%s/weather?q=%s&appid=%s", apiUrl, cityName, apiKey)))
+                URI.create(format("%s/weather?q=%s&appid=%s&units=metric", apiUrl, cityName, apiKey)))
                 .header("accept", "application/json")
                 .build();
 
@@ -34,4 +34,5 @@ public class WeatherServiceImpl implements WeatherService {
 
         return response.body();
     }
+
 }
