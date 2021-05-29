@@ -3,14 +3,14 @@
 
 name: Build and deploy frontend
 
-on: ['push']
-  # push:
-  #   paths:
-  #     - 'frontend/**'
+on:
+  push:
+    paths:
+      - 'frontend/**'
 
 env:
   AZURE_WEBAPP_NAME: downtown-frontend
-  AZURE_WEBAPP_PACKAGE_PATH: 'frontend/' 
+  AZURE_WEBAPP_PACKAGE_PATH: './frontend/build' 
   NODE_VERSION: '14.x'
 
 jobs:
@@ -19,17 +19,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@main
-    - uses: actions/setup-node@v1
+    - name: Use Node.js ${{ env.NODE_VERSION }}
+      uses: actions/setup-node@v1
       with:
         node-version: ${{ env.NODE_VERSION }}
     - name: install and build
       run: |
-        # Build and test the project, then
-        # deploy to Azure Web App.
-        npm run install
+        npm install
         npm run build
-      working-directory: my-app-path
-    - name: 'Deploy to Azure WebApp'
+      working-directory: frontend
+    - name: 'Deploy to Azure'
       uses: azure/webapps-deploy@v2
       with: 
         app-name: ${{ env.AZURE_WEBAPP_NAME }}
