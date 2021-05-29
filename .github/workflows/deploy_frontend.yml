@@ -15,12 +15,6 @@ env:
 
 jobs:
   build-and-deploy:
-    name: Make space
-    runs-on: ubuntu-latest
-    run: |
-      # Cleanup space for ubuntu
-      sudo rm -rf "/usr/local/share/boost"
-      sudo rm -rf "$AGENT_TOOLSDIRECTORY"
     name: Build and Deploy
     runs-on: ubuntu-latest
     steps:
