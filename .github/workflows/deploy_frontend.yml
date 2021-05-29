@@ -23,14 +23,6 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ env.NODE_VERSION }}
-   # - name: Free disk space
-    #  run: |
-     #   sudo rm -rf "/usr/local/share/boost"
-      #  sudo rm -rf "$AGENT_TOOLSDIRECTORY"
-       # sudo apt-get -qq purge build-essential ghc*
-        #sudo apt-get clean
-        #sudo rm -rf /usr/local/*
-        #df -h
     - name: npm install, build, and test
       run: |
         # Build and test the project, then
@@ -39,7 +31,7 @@ jobs:
         cd frontend
         npm install
         npm run build --if-present
-      working-directory: my-app-path
+      working-directory: frontend
     - name: 'Deploy to Azure WebApp'
       uses: azure/webapps-deploy@v2
       with: 
