@@ -15,7 +15,7 @@ env:
 
 jobs:
   build-and-deploy:
-    name: Make space
+    - name: Make space
     run: |
       # Cleanup space for ubuntu
       sudo rm -rf "/usr/local/share/boost"
