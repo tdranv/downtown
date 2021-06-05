@@ -1,0 +1,6 @@
+.event-card img {
+  float: left;
+  width: 100vh;
+  height: 50vh;
+  object-fit: cover;
+}
