@@ -82,23 +82,28 @@ namespace Hotels.Data.Repositories
             return result;
         }
 
-        public virtual async Task DeleteAsync(params TModel[] entities)
+        public virtual async Task DeleteAsync(TModel entity)
         {
-            if (entities is null)
+            if (entity is null)
             {
-                throw new ArgumentNullException(nameof(entities));
+                throw new ArgumentNullException(nameof(entity));
             }
 
-            if (entities.Any(e => e is null))
+            TDataEntity dataEntity = this.ToDataEntity(entity);
+            this.UnitOfWork.MarkAsDeletedAsync(dataEntity);
+
+            await this.UnitOfWork.SaveAllAsync().ConfigureAwait(false);
+        }
+
+        public virtual async Task InsertHotelAsync(TModel entity)
+        {
+            if (entity is null)
             {
-                throw new ArgumentException("Entities contains null values", nameof(entities));
+                throw new ArgumentNullException(nameof(entity));
             }
 
-            foreach (TModel entity in entities)
-            {
-                TDataEntity dataEntity = this.ToDataEntity(entity);
-                this.UnitOfWork.MarkAsDeletedAsync(dataEntity);
-            }
+            TDataEntity dataEntity = this.ToDataEntity(entity);
+            await this.UnitOfWork.MarkAsCreatedAsync(dataEntity);
 
             await this.UnitOfWork.SaveAllAsync().ConfigureAwait(false);
         }

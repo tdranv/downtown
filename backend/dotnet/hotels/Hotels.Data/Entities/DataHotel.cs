@@ -12,7 +12,7 @@ namespace Hotels.Data.Entities
 
         public int CityId { get; set; }
 
-        public virtual City City { get; set;}
+        public virtual DataCity City { get; set;}
 
 
         public static void Map(ModelBuilder modelBuilder)
@@ -24,7 +24,7 @@ namespace Hotels.Data.Entities
 
             config.HasOne(c => c.City)
                 .WithMany()
-                .HasForeignKey(c => c.Id);
+                .HasForeignKey(c => c.CityId);
         }
 
         public void SetProperties(Hotel model)
