@@ -826,3 +826,4 @@ thumb
 sketch
 
 # End of https://www.toptal.com/developers/gitignore/api/react,java,java-web,intellij,csharp,aspnetcore,dotnetcore,visualstudio,visualstudiocode
+/frontend/fmi-todo-app/package-lock.json

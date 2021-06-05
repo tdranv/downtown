@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31321.278
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Covid19.WebApi", "Covid19.WebApi\Covid19.WebApi.csproj", "{ABFED558-D731-4C4F-B581-249DEB568BBE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Covid19.Services", "Covid19.Service\Covid19.Services.csproj", "{D2748162-3974-4CBE-8E99-1EC039A1913C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{ABFED558-D731-4C4F-B581-249DEB568BBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ABFED558-D731-4C4F-B581-249DEB568BBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ABFED558-D731-4C4F-B581-249DEB568BBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ABFED558-D731-4C4F-B581-249DEB568BBE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2748162-3974-4CBE-8E99-1EC039A1913C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2748162-3974-4CBE-8E99-1EC039A1913C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2748162-3974-4CBE-8E99-1EC039A1913C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2748162-3974-4CBE-8E99-1EC039A1913C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C0A55980-94DE-422F-9590-78EF2ED92395}
+	EndGlobalSection
+EndGlobal
