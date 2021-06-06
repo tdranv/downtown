@@ -29,6 +29,7 @@ const CityTag = (props) => {
 };
 
 export default function EventCard(event) {
+  if (!event) return null;
   const { photoUrl, name, description, happensOn } = event;
   return (
     <div className="event-card">

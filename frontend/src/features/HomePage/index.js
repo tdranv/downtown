@@ -21,7 +21,7 @@ function eventsReducer(state, action) {
       return { ...state, isLoadingInitial: true, isLoadingMore: false };
     case "fetch-end":
       return {
-        all: action.data,
+        all: [...state.all, ...action.data],
         isLoadingInitial: false,
         isLoadingMore: false,
       };
@@ -33,6 +33,8 @@ function eventsReducer(state, action) {
 const HomePage = () => {
   const [page, setPage] = useState(1);
   const [ref, { entry }] = useIntersectionObserver();
+  const [canFetchMore, setCanFetchMore] = useState(true);
+
   const isVisible = entry && entry.isIntersecting;
 
   const [{ all, isLoadingInitial, isLoadingMore }, dispatch] = useReducer(
@@ -49,9 +51,11 @@ const HomePage = () => {
   }, [isVisible]);
 
   useEffect(() => {
-    async function fetchData() {
+    if (!canFetchMore) return;
+    async function fetchData(pageToFetch) {
       dispatch({ type: "fetch-start" });
-      const events = await fetchEvents(page);
+      const events = await fetchEvents(pageToFetch);
+      if (events.length === 0) setCanFetchMore(false);
       dispatch({ type: "fetch-end", data: events });
     }
 
@@ -75,6 +79,11 @@ const HomePage = () => {
       {isLoadingMore ? (
         <div className="bottom-spinner-container">
           <Spinner className="bottom-spinner" />
+        </div>
+      ) : null}
+      {!canFetchMore ? (
+        <div className="bottom-spinner-container">
+          <h1>No more events</h1>
         </div>
       ) : null}
       <div ref={ref} />
