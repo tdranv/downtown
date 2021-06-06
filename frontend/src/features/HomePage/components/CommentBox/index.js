@@ -20,7 +20,7 @@ export default function CommentBox({ eventId }) {
         `${COMMENTS_API_URL}/comments?eventid=${eventId}`
       );
       const json = await data.json();
-      setCommentData(data);
+      setCommentData(json);
     }
     fetchData();
   }, []);

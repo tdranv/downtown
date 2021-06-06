@@ -11,6 +11,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import CommentBox from "../CommentBox/index";
+import { useHotels } from "../../../../providers/HotelsProvider";
 
 const EventCategories = ({ categories }) => {
   if (!categories || categories.length === 0) return null;
@@ -31,6 +32,7 @@ const CityTag = (props) => {
 
 export default function EventCard(event) {
   if (!event) return null;
+  const data = useHotels();
   const { photoUrl, name, description, happensOn } = event;
   return (
     <div className="event-card">

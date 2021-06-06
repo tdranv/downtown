@@ -5,6 +5,7 @@ import EventCard from "./components/EventCard";
 import { EVENTS_API_URL } from "../../constants";
 import useIntersectionObserver from "../../hooks/useIntersectionObserver";
 import CovidDataProvider from "../../providers/CovidStatiscticsProvider";
+import { HotelProvider } from "../../providers/HotelsProvider";
 
 const fetchEvents = async (page) => {
   const result = await fetch(
@@ -70,12 +71,14 @@ const HomePage = () => {
           <Spinner size="xl" className="spinner" />
         </div>
       ) : (
-        <Container maxW={"7xl"} p="12">
-          {all &&
-            all.length > 0 &&
-            all.map((event) => <EventCard key={event.id} {...event} />)}
-          <Divider marginTop="5" />
-        </Container>
+        <HotelProvider>
+          <Container maxW={"7xl"} p="12">
+            {all &&
+              all.length > 0 &&
+              all.map((event) => <EventCard key={event.id} {...event} />)}
+            <Divider marginTop="5" />
+          </Container>
+        </HotelProvider>
       )}
       {isLoadingMore ? (
         <div className="bottom-spinner-container">
