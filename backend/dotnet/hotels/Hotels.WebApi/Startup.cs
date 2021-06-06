@@ -26,6 +26,17 @@ namespace Hotels.WebApi
             services.AddDbContext<HotelDbContext>(options =>
                 options.UseSqlite(@"Data Source=..\hotels.db", b => b.MigrationsAssembly("Hotels.WebApi")));
 
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(
+                    builder =>
+                    {
+                        builder.WithOrigins("http://localhost:3000")
+                                .AllowAnyHeader()
+                                .AllowAnyMethod();
+                    });
+            });
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -49,6 +60,8 @@ namespace Hotels.WebApi
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors();
 
             app.UseAuthentication();
             app.UseAuthorization();
