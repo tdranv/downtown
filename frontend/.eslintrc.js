@@ -15,7 +15,7 @@ module.exports = {
   rules: {
     "no-unused-vars": 0,
     "react/prop-types": 0,
-    "prettier/prettier": 0,
+    "prettier/prettier": ["warn", { endOfLine: "auto" }],
     "react/react-in-jsx-scope": "off",
     "react/jsx-filename-extension": [1, { extensions: [".js", ".jsx"] }],
   },

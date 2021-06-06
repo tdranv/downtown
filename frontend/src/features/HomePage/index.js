@@ -70,14 +70,12 @@ const HomePage = () => {
           <Spinner size="xl" className="spinner" />
         </div>
       ) : (
-        <CovidDataProvider>
-          <Container maxW={"7xl"} p="12">
-            {all &&
-              all.length > 0 &&
-              all.map((event) => <EventCard key={event.id} {...event} />)}
-            <Divider marginTop="5" />
-          </Container>
-        </CovidDataProvider>
+        <Container maxW={"7xl"} p="12">
+          {all &&
+            all.length > 0 &&
+            all.map((event) => <EventCard key={event.id} {...event} />)}
+          <Divider marginTop="5" />
+        </Container>
       )}
       {isLoadingMore ? (
         <div className="bottom-spinner-container">
