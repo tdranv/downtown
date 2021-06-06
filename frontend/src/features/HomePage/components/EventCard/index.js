@@ -95,7 +95,7 @@ export default function EventCard(event) {
           >
             {description}
           </Text>
-          <CommentBox />
+          <CommentBox eventId={event.id} />
         </Box>
       </Box>
     </div>

@@ -4,7 +4,7 @@ import firebase from "firebase";
 import "firebase/auth";
 import { COMMENTS_API_URL } from "../../../../constants";
 
-export default function CommentBox(event) {
+export default function CommentBox({ eventId }) {
   const [userData, setUserData] = useState();
   const [commentData, setCommentData] = useState();
 
@@ -16,7 +16,9 @@ export default function CommentBox(event) {
 
   useEffect(() => {
     async function fetchData() {
-      const data = await fetch(`${COMMENTS_API_URL}/comments?eventid=${1}`);
+      const data = await fetch(
+        `${COMMENTS_API_URL}/comments?eventid=${eventId}`
+      );
       const json = await data.json();
       setCommentData(data);
     }
