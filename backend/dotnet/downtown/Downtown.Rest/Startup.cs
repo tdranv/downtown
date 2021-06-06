@@ -1,12 +1,13 @@
 using Downtown.Data;
 using Downtown.Data.Repositories;
-using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System;
 
@@ -24,26 +25,31 @@ namespace Downtown.Rest
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var connectionString = "server=downtown-db.mariadb.database.azure.com;user=todor_andonov@downtown-db;password=password1!; database =downtown_db";
+            var connectionString = "server=downtown-db.mariadb.database.azure.com;user=todor_andonov@downtown-db;password=password1!;database =downtown_db";
             var serverVersion = new MariaDbServerVersion(new Version(10, 3));
 
             services.AddDbContext<DowntownDbContext>(options =>
                 options.UseMySql(connectionString, serverVersion, mysqlOptions => mysqlOptions.MigrationsAssembly("Downtown.Data")));
-
-            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<DowntownDbContext>();
-
-            services.AddIdentityServer()
-                .AddApiAuthorization<ApplicationUser, DowntownDbContext>();
-
-            services.AddAuthentication()
-                .AddIdentityServerJwt();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Downtown.Rest", Version = "v1" });
             });
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                    .AddJwtBearer(options =>
+                    {
+                        options.Authority = "https://securetoken.google.com/downtown-app-su";
+                        options.TokenValidationParameters = new TokenValidationParameters
+                        {
+                            ValidateIssuer = true,
+                            ValidIssuer = "https://securetoken.google.com/downtown-app-su",
+                            ValidateAudience = true,
+                            ValidAudience = "downtown-app-su",
+                            ValidateLifetime = true
+                        };
+                    });
 
             services.AddScoped<IUnitOfWork, DowntownDbContext>();
             services.AddScoped<ICityRepository, CityRepository>();
@@ -65,7 +71,6 @@ namespace Downtown.Rest
             app.UseRouting();
 
             app.UseAuthentication();
-            app.UseIdentityServer();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
