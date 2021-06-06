@@ -10,6 +10,7 @@ import {
   Tag,
   useColorModeValue,
 } from "@chakra-ui/react";
+import CommentBox from "../CommentBox/index";
 
 const EventCategories = ({ categories }) => {
   if (!categories || categories.length === 0) return null;
@@ -94,6 +95,7 @@ export default function EventCard(event) {
           >
             {description}
           </Text>
+          <CommentBox />
         </Box>
       </Box>
     </div>

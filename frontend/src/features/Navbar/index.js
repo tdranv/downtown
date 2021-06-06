@@ -63,8 +63,6 @@ export default function Navbar() {
     });
   }, []);
 
-  console.log(userData);
-
   return (
     <>
       <Box bg={useColorModeValue("gray.100", "gray.900")} px={4}>
@@ -119,7 +117,7 @@ export default function Navbar() {
             <RouteLink to="/login">
               Login
             </RouteLink>) :
-            <h2>{userData.displayName}</h2> }
+            <h2>{userData.displayName} (<Link href="#" onClick={ () => firebase.auth().signOut() }>Logout</Link>)</h2>}
           </Flex>
         </Flex>
 

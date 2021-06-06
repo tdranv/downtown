@@ -1,23 +1,22 @@
 ﻿using Downtown.Core.Models;
 using Downtown.Data.Entities;
-using System;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Downtown.Data.Repositories
 {
-    public class CommentRepository : BaseRepository<Comment, DataComment>, ICommentRepository
+    public class CommentRepository : BaseDataEntityRepository<Comment, DataComment>, ICommentRepository
     {
         public CommentRepository(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
         }
 
-        protected override DataComment ToDataEntity(Comment model)
+        public async Task<Comment[]> GetByEventId(int eventId)
         {
-            throw new NotImplementedException();
-        }
+            var result = await this.UnitOfWork.GetAllQuery<DataComment>().Where(x => x.EventId == eventId).ToArrayAsync();
 
-        protected override Comment ToModel(DataComment entity)
-        {
-            throw new NotImplementedException();
+            return result.Select(x => this.ToModel(x)).ToArray();
         }
     }
 }

@@ -21,7 +21,8 @@ namespace Downtown.Data.Entities
         {
             EntityTypeBuilder<DataComment> config = modelBuilder.Entity<DataComment>().ToTable("comments");
             config.HasKey(x => x.Id);
-            config.Property(x => x.EventId);
+            config.Property(x => x.Id).HasColumnName("comment_id");
+            config.Property(x => x.EventId).HasColumnName("event_id");
             config.Property(x => x.UserName);
             config.Property(x => x.Content);
             config.Property(x => x.Date);
@@ -30,7 +31,7 @@ namespace Downtown.Data.Entities
         public void SetProperties(Comment model)
         {
             this.Id = model.Id;
-            this.EventId = model.Id;
+            this.EventId = model.EventId;
             this.UserName = model.UserName;
             this.Content = model.Content;
             this.Date = model.Date;

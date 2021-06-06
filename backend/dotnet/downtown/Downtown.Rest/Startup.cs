@@ -9,7 +9,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using System;
 
 namespace Downtown.Rest
 {
@@ -26,6 +25,17 @@ namespace Downtown.Rest
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<DowntownDbContext>(options => options.UseSqlite(@"Data Source=..\..\..\..\database\events.db"));
+
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(
+                    builder =>
+                    {
+                        builder.WithOrigins("http://localhost:3000")
+                                .AllowAnyHeader()
+                                .AllowAnyMethod();
+                    });
+            });
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -50,6 +60,7 @@ namespace Downtown.Rest
             services.AddScoped<IUnitOfWork, DowntownDbContext>();
             services.AddScoped<ICityRepository, CityRepository>();
             services.AddScoped<IEventRepository, EventRepository>();
+            services.AddScoped<ICommentRepository, CommentRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -65,6 +76,8 @@ namespace Downtown.Rest
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors();
 
             app.UseAuthentication();
             app.UseAuthorization();

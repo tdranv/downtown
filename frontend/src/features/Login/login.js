@@ -27,25 +27,12 @@ class Login extends React.Component {
   render() {
     return (
       <div>
-        {this.state.isSignedIn ? (
-          <Redirect to={{ pathname: "/" }} />
-        ) : (
-          <div className="section">
-            <div className="container">
-              <div className="row">
-                <div className="col-md-12">
-                  <div className="section-title">
-                    <h2 className="title">Sign In</h2>
-                  </div>
-                  <StyledFirebaseAuth
-                    uiConfig={this.uiConfig}
-                    firebaseAuth={firebase.auth()}
-                  />
-                </div>
-              </div>
-            </div>
+        {this.state.isSignedIn ?
+          <Redirect to={{ pathname: "/" }} /> :
+          <div style={{ marginTop: '50px' }}>
+            <StyledFirebaseAuth uiConfig={this.uiConfig} firebaseAuth={firebase.auth()} />
           </div>
-        )}
+        }
       </div>
     );
   }
