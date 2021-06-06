@@ -39,7 +39,7 @@ namespace Hotels.Data.Entities
             model.Id = this.Id;
             model.Name = this.Name;
             model.CityId = this.CityId;
-            model.City = this.City.ToModel();
+            model.City = this.City?.ToModel();
 
             return model;
         }
