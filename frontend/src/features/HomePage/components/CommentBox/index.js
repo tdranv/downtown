@@ -2,6 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import firebase from "firebase";
 import "firebase/auth";
+import { COMMENTS_API_URL } from "../../../../constants";
 
 export default function CommentBox(event) {
   const [userData, setUserData] = useState();
@@ -15,7 +16,7 @@ export default function CommentBox(event) {
 
   useEffect(() => {
     async function fetchData() {
-      const data = await fetch(`https://localhost:44316/comments?eventid=${1}`);
+      const data = await fetch(`${COMMENTS_API_URL}/comments?eventid=${1}`);
       const json = await data.json();
       setCommentData(data);
     }
@@ -26,17 +27,18 @@ export default function CommentBox(event) {
 
   async function submitComment() {
     var token = await firebase.auth().currentUser.getIdToken(true);
-    await fetch('https://localhost:44316/comments', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}` 
-        },
-        body: JSON.stringify({
-            eventId: 1,
-            content: 'asd'
-        })}
-    )}
+    await fetch(`${COMMENTS_API_URL}/comments`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        eventId: 1,
+        content: "asd",
+      }),
+    });
+  }
 
   return (
     <div className="comment-box">
