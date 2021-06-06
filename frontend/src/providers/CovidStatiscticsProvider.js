@@ -9,7 +9,5 @@ export const useCovidData = (city) => {
 };
 
 export default function CovidDataProvider({ city, props }) {
-  console.log(city);
-
   return <CovidDataContext.Provider value={{}} {...props} />;
 }

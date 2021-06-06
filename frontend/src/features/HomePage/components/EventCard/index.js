@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import "./index.css";
 import {
   Box,
@@ -32,8 +32,16 @@ const CityTag = (props) => {
 
 export default function EventCard(event) {
   if (!event) return null;
-  const data = useHotels();
+
+  const [hotels] = useHotels();
+
   const { photoUrl, name, description, happensOn } = event;
+
+  const nearbyHotels = useMemo(
+    () => hotels.filter((hotel) => hotel.cityId === event.city.id),
+    [hotels]
+  );
+
   return (
     <div className="event-card">
       <Box
@@ -98,6 +106,16 @@ export default function EventCard(event) {
             {description}
           </Text>
           <CommentBox eventId={event.id} />
+        </Box>
+        <Box className="hotels-container">
+          <h1>Hotels nearby</h1>
+          {nearbyHotels
+            ? nearbyHotels.map((hotel) => (
+                <div key={hotel.id}>
+                  <h1>{hotel.name}</h1>
+                </div>
+              ))
+            : null}
         </Box>
       </Box>
     </div>

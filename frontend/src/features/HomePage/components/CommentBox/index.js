@@ -25,8 +25,6 @@ export default function CommentBox({ eventId }) {
     fetchData();
   }, []);
 
-  console.log(userData);
-
   async function submitComment() {
     var token = await firebase.auth().currentUser.getIdToken(true);
     await fetch(`${COMMENTS_API_URL}/comments`, {
