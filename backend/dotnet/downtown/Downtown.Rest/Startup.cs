@@ -25,11 +25,7 @@ namespace Downtown.Rest
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var connectionString = "server=f80b6byii2vwv8cx.chr7pe7iynqr.eu-west-1.rds.amazonaws.com;user=ocp3ubpwb3m14phx;password=hosygzzezyukc42g;database=xqpd61r8ts890uk2";
-            var serverVersion = new MariaDbServerVersion(new Version(10, 3));
-
-            services.AddDbContext<DowntownDbContext>(options =>
-                options.UseMySql(connectionString, serverVersion, mysqlOptions => mysqlOptions.MigrationsAssembly("Downtown.Data")));
+            services.AddDbContext<DowntownDbContext>(options => options.UseSqlite(@"Data Source=..\..\..\..\database\events.db"));
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
