@@ -1,4 +1,5 @@
 import React from "react";
+import "./index.css";
 import { useEffect, useState } from "react";
 import firebase from "firebase";
 import "firebase/auth";
@@ -20,7 +21,7 @@ export default function CommentBox({ eventId }) {
         `${COMMENTS_API_URL}/comments?eventid=${eventId}`
       );
       const json = await data.json();
-      setCommentData(json);
+      setCommentData(() => json);
     }
     fetchData();
   }, []);
@@ -41,18 +42,18 @@ export default function CommentBox({ eventId }) {
   }
 
   return (
-    <div className="comment-box">
+    <div className="comments-container">
       {commentData &&
         commentData.length > 0 &&
-        commentData.map((comment) => {
-          <div key={comment.id}>
-            <span>{comment.user}</span>:<span>{comment.text}</span>
-          </div>;
-        })}
-
+        commentData.map((comment) => (
+          <div key={comment.id} className="comment-entry">
+            <h1>{`${comment.userName}`}</h1>
+            <h1>{`${comment.content}`}</h1>
+          </div>
+        ))}
       {userData ? (
-        <div>
-          <textarea placeholder="Type comment here"></textarea>
+        <div className="submit-comment">
+          <textarea rows={2} placeholder="Type comment here"></textarea>
           <button onClick={() => submitComment()}>Add</button>
         </div>
       ) : null}

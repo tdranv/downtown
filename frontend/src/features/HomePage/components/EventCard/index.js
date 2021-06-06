@@ -94,7 +94,7 @@ export default function EventCard(event) {
           </div>
           <Heading marginTop="1">
             <Link textDecoration="none" _hover={{ textDecoration: "none" }}>
-              {name}
+              {`${event.id} ${name}`}
             </Link>
           </Heading>
           <Text
