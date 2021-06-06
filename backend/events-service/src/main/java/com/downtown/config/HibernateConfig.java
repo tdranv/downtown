@@ -16,13 +16,21 @@ import java.util.Properties;
 @PropertySource("classpath:application.properties")
 public class HibernateConfig {
 
-    private final String dbUrl, dbUsername, dbPassword;
+    private final Environment environment;
 
     @Autowired
     public HibernateConfig(Environment env) {
-        dbUrl = env.getProperty("database.url");
-        dbUsername = env.getProperty("database.username");
-        dbPassword = env.getProperty("database.password");
+        this.environment = env;
+    }
+
+    @Bean
+    public DataSource dataSource() {
+        final DriverManagerDataSource dataSource = new DriverManagerDataSource();
+        dataSource.setDriverClassName(environment.getProperty("driverClassName"));
+        dataSource.setUrl(environment.getProperty("url"));
+        dataSource.setUsername(environment.getProperty("user"));
+        dataSource.setPassword(environment.getProperty("password"));
+        return dataSource;
     }
 
     @Bean
@@ -34,16 +42,16 @@ public class HibernateConfig {
         return sessionFactory;
     }
 
-    @Bean
-    public DataSource dataSource() {
-        DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        dataSource.setUrl(dbUrl);
-        dataSource.setUsername(dbUsername);
-        dataSource.setPassword(dbPassword);
-
-        return dataSource;
-    }
+//    @Bean
+//    public DataSource dataSource() {
+//        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+//        dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
+//        dataSource.setUrl(dbUrl);
+//        dataSource.setUsername(dbUsername);
+//        dataSource.setPassword(dbPassword);
+//
+//        return dataSource;
+//    }
 
     private Properties hibernateProperties() {
         Properties hibernateProperties = new Properties();
