@@ -18,6 +18,9 @@ import {
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import { useEffect, useState } from "react";
 import { EVENTS_API_URL } from "../../constants";
+import { Link as RouteLink } from "react-router-dom";
+import firebase from "firebase";
+import "firebase/auth";
 
 const Links = ["Dashboard", "Projects", "Team"];
 
@@ -44,6 +47,7 @@ const fetchWeather = async () => {
 export default function Navbar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [weatherData, setWeatherData] = useState();
+  const [userData, setUserData] = useState();
 
   useEffect(() => {
     async function fetchData() {
@@ -52,6 +56,14 @@ export default function Navbar() {
     }
     fetchData();
   }, []);
+
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged((user) => {
+      setUserData(() => user);
+    });
+  }, []);
+
+  console.log(userData);
 
   return (
     <>
@@ -103,6 +115,11 @@ export default function Navbar() {
                 <MenuItem>Link 3</MenuItem>
               </MenuList>
             </Menu>
+            {!userData ? (
+            <RouteLink to="/login">
+              Login
+            </RouteLink>) :
+            <h2>{userData.displayName}</h2> }
           </Flex>
         </Flex>
 
