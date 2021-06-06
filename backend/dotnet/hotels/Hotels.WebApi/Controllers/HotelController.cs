@@ -20,7 +20,7 @@ namespace Hotels.WebApi.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var hotels = await this.hotelRepository.GetAllAsync().ConfigureAwait(false);
+            var hotels = await this.hotelRepository.GetAllHotelsAsync().ConfigureAwait(false);
 
             return this.Ok(hotels);
         }
