@@ -1,4 +1,2 @@
-const isDev = !process.env.NODE_ENV || process.env.NODE_ENV === "development";
-export const EVENTS_API_URL = isDev
-  ? "http://localhost:8080"
-  : "https://downtown-backend-downtown.azuremicroservices.io";
+export const EVENTS_API_URL = "http://localhost:8080";
+export const COVID_API_URL = "https://localhost:44318​/covidStatistics";

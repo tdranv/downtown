@@ -10,12 +10,12 @@ namespace Covid19.Services.Services
 {
     public class Covid19Service
     {
-        private readonly string baseAddress = "https://api.apify.com/v2/";
-        private readonly string unitedStatesCovidStatisticPath = "key-value-stores/moxA3Q0aZh5LosewB/records/LATEST?disableRedirect=true";
+        private static readonly string baseAddress = "https://api.apify.com/v2/";
+        private static readonly string unitedStatesCovidStatisticPath = "key-value-stores/moxA3Q0aZh5LosewB/records/LATEST?disableRedirect=true";
 
         static HttpClient client = new HttpClient();
 
-        private async Task<CountryCovidStatisticsModel> GetUnitedStatesCovidStatisticsAsync(string unitedStatesCovidStatisticPath)
+        private static async Task<CountryCovidStatisticsModel> GetUnitedStatesCovidStatisticsAsync(string unitedStatesCovidStatisticPath)
         {
             client.BaseAddress = new Uri(baseAddress);
             client.DefaultRequestHeaders.Accept.Clear();
