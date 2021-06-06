@@ -8,7 +8,10 @@ import { COMMENTS_API_URL } from "../../../../constants";
 async function fetchData(eventId, onSuccess) {
   const data = await fetch(`${COMMENTS_API_URL}/comments?eventId=${eventId}`);
   const json = await data.json();
-  onSuccess(() => json);
+  const sorted = json.sort(
+    (c1, c2) => new Date(c2.date).getTime() - new Date(c1.date).getTime()
+  );
+  onSuccess(() => sorted);
 }
 
 export default function CommentBox({ eventId }) {
@@ -49,12 +52,15 @@ export default function CommentBox({ eventId }) {
     <div className="comments-container">
       {commentData &&
         commentData.length > 0 &&
-        commentData.slice(0, 3).map((comment) => (
-          <div key={comment.id} className="comment-entry">
-            <h1>{`${comment.userName} says:`}</h1>
-            <h2>{`${comment.content}`}</h2>
-          </div>
-        ))}
+        commentData
+          .slice(0, 3)
+          .reverse()
+          .map((comment) => (
+            <div key={comment.id} className="comment-entry">
+              <h1>{`${comment.userName} says:`}</h1>
+              <h2>{`${comment.content}`}</h2>
+            </div>
+          ))}
       {userData ? (
         <form onSubmit={(e) => submitComment(e)}>
           <div className="submit-comment">
