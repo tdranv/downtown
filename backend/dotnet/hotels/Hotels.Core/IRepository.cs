@@ -16,7 +16,5 @@ namespace Hotels.Core
         Task<T[]> GetAllAsync();
 
         Task DeleteAsync(T entity);
-
-        Task InsertHotelAsync(T entity);
     }
 }

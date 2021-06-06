@@ -1,5 +1,5 @@
-﻿using Hotels.Core.Models;
-using Hotels.Data.Repositories;
+﻿using Hotels.Data.Repositories;
+using Hotels.WebApi.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
@@ -25,23 +25,34 @@ namespace Hotels.WebApi.Controllers
             return this.Ok(hotels);
         }
 
-        [HttpGet("getHotelById")]
+        [HttpGet("id")]
         public async Task<IActionResult> GetHotelById(int id)
         {
             var hotel = await this.hotelRepository.GetByIdAsync(id).ConfigureAwait(false);
 
+            if (hotel is null)
+            {
+                return this.NotFound();
+            }
+
             return this.Ok(hotel);
         }
 
-        [HttpPost("insertHotel")]
-        public async Task<IActionResult> InsertHotel(Hotel hotel)
+        [HttpPost]
+        public async Task<IActionResult> InsertHotel(HotelCreateModel input)
         {
-            await this.hotelRepository.InsertHotelAsync(hotel).ConfigureAwait(false);
+            if (!this.ModelState.IsValid)
+            {
+                return this.BadRequest();
+            }
 
-            return NoContent();
+            var model = input.ToModel();
+            await this.hotelRepository.SaveAsync(model).ConfigureAwait(false);
+
+            return Ok();
         }
 
-        [HttpPost("delete")]
+        [HttpDelete]
         public async Task<IActionResult> DeleteHotelById(int id)
         {
             var hotel = await this.hotelRepository.GetByIdAsync(id).ConfigureAwait(false);

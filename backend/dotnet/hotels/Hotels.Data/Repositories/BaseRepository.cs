@@ -95,19 +95,6 @@ namespace Hotels.Data.Repositories
             await this.UnitOfWork.SaveAllAsync().ConfigureAwait(false);
         }
 
-        public virtual async Task InsertHotelAsync(TModel entity)
-        {
-            if (entity is null)
-            {
-                throw new ArgumentNullException(nameof(entity));
-            }
-
-            TDataEntity dataEntity = this.ToDataEntity(entity);
-            await this.UnitOfWork.MarkAsCreatedAsync(dataEntity);
-
-            await this.UnitOfWork.SaveAllAsync().ConfigureAwait(false);
-        }
-
         protected abstract TModel ToModel(TDataEntity entity);
 
         protected abstract TDataEntity ToDataEntity(TModel model);

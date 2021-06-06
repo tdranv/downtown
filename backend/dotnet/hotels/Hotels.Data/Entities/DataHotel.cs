@@ -14,7 +14,6 @@ namespace Hotels.Data.Entities
 
         public virtual DataCity City { get; set;}
 
-
         public static void Map(ModelBuilder modelBuilder)
         {
             EntityTypeBuilder<DataHotel> config = modelBuilder.Entity<DataHotel>().ToTable("Hotel");

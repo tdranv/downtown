@@ -24,16 +24,7 @@ namespace Hotels.WebApi
         public void ConfigureServices(IServiceCollection services)
         { 
             services.AddDbContext<HotelDbContext>(options =>
-                options.UseSqlite(@"Data Source=C:\Users\katty\Documents\Db\hotels.db", b => b.MigrationsAssembly("Hotels.WebApi")));
-
-            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<HotelDbContext>();
-
-            services.AddIdentityServer()
-                .AddApiAuthorization<ApplicationUser, HotelDbContext>();
-
-            services.AddAuthentication()
-                .AddIdentityServerJwt();
+                options.UseSqlite(@"Data Source=..\hotels.db", b => b.MigrationsAssembly("Hotels.WebApi")));
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -60,7 +51,6 @@ namespace Hotels.WebApi
             app.UseRouting();
 
             app.UseAuthentication();
-            app.UseIdentityServer();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
