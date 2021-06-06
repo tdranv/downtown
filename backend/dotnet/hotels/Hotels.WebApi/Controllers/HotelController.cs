@@ -1,5 +1,5 @@
 ﻿using Hotels.Data.Repositories;
-using Hotels.WebApi.Models;
+using Hotels.WebApi.Model;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
