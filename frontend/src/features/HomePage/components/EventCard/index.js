@@ -94,7 +94,7 @@ export default function EventCard(event) {
           </div>
           <Heading marginTop="1">
             <Link textDecoration="none" _hover={{ textDecoration: "none" }}>
-              {`${event.id} ${name}`}
+              {`${name}`}
             </Link>
           </Heading>
           <Text
@@ -112,7 +112,15 @@ export default function EventCard(event) {
           {nearbyHotels
             ? nearbyHotels.map((hotel) => (
                 <div key={hotel.id}>
-                  <h1>{hotel.name}</h1>
+                  <h1>
+                    <a
+                      href={`https://www.google.bg/search?q=${hotel.name
+                        .split(" ")
+                        .join("+")}`}
+                    >
+                      {hotel.name}
+                    </a>
+                  </h1>
                 </div>
               ))
             : null}

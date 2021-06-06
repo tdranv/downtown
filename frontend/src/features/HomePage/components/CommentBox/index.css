@@ -9,5 +9,13 @@
 }
 
 .comment-entry {
-margin-top: 10px;
+  margin-top: 10px;
+}
+
+.comment-entry > h1 {
+  font-weight: 500;
+}
+
+.comment-entry > h2 {
+  margin-left: 15px;
 }
