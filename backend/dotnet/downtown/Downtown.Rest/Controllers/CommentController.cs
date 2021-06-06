@@ -23,7 +23,7 @@ namespace Downtown.Rest.Controllers
         [HttpGet]
         public async Task<IActionResult> Get(int eventId)
         {
-            var events = await this.commentRepository.GetAllAsync().ConfigureAwait(false);
+            var events = await this.commentRepository.GetByEventId(eventId).ConfigureAwait(false);
 
             return this.Ok(events);
         }
