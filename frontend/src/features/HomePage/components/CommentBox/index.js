@@ -26,7 +26,11 @@ export default function CommentBox({ eventId }) {
     fetchData(eventId, setCommentData);
   }, []);
 
-  async function submitComment() {
+  async function submitComment(event) {
+    if (event) {
+      event.preventDefault();
+    }
+    setCommentText("");
     const token = await firebase.auth().currentUser.getIdToken(true);
     fetch(`${COMMENTS_API_URL}/comments`, {
       method: "POST",
@@ -52,14 +56,18 @@ export default function CommentBox({ eventId }) {
           </div>
         ))}
       {userData ? (
-        <div className="submit-comment">
-          <textarea
-            rows={2}
-            placeholder="Type comment here"
-            onChange={(e) => setCommentText(e.target.value)}
-          ></textarea>
-          <button onClick={() => submitComment()}>Add</button>
-        </div>
+        <form onSubmit={(e) => submitComment(e)}>
+          <div className="submit-comment">
+            <input
+              placeholder="Type comment here"
+              value={commentText}
+              onChange={(e) => setCommentText(e.target.value)}
+            ></input>
+            <button type="submit" onClick={(e) => submitComment(e)}>
+              Add
+            </button>
+          </div>
+        </form>
       ) : null}
     </div>
   );

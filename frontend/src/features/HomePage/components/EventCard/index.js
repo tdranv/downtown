@@ -12,6 +12,7 @@ import {
 } from "@chakra-ui/react";
 import CommentBox from "../CommentBox/index";
 import { useHotels } from "../../../../providers/HotelsProvider";
+import { useCovidData } from "../../../../providers/CovidStatiscticsProvider";
 
 const EventCategories = ({ categories }) => {
   if (!categories || categories.length === 0) return null;
@@ -30,16 +31,34 @@ const CityTag = (props) => {
   );
 };
 
+const CovidTag = ({ cases }) => {
+  return (
+    <Tag
+      size={"md"}
+      variant="solid"
+      colorScheme={parseInt(cases) / 100 < 500 ? "green" : "red"}
+    >
+      {`COVID19: ${cases}`}
+    </Tag>
+  );
+};
+
 export default function EventCard(event) {
   if (!event) return null;
 
-  const [hotels] = useHotels();
+  const [hotels] = useHotels([]);
+  const [covidData] = useCovidData([]);
 
   const { photoUrl, name, description, happensOn } = event;
 
   const nearbyHotels = useMemo(
     () => hotels.filter((hotel) => hotel.cityId === event.city.id),
     [hotels]
+  );
+
+  const cityCovidData = useMemo(
+    () => covidData.find((data) => data.name === event.city.name),
+    [covidData]
   );
 
   return (
@@ -89,6 +108,9 @@ export default function EventCard(event) {
           <div style={{ display: "flex" }}>
             <HStack spacing={2}>
               <CityTag city={event.city.name} />
+              {cityCovidData ? (
+                <CovidTag cases={cityCovidData.casesReported} />
+              ) : null}
               <EventCategories categories={event.categories} />
             </HStack>
           </div>

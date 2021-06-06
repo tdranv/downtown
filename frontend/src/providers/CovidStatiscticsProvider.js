@@ -1,13 +1,35 @@
-import { createContext, useContext } from "react";
+import * as React from "react";
+import { COVID_API_URL } from "../constants";
 
-const CovidDataContext = createContext(null);
+const CovidDataContext = React.createContext();
 
-export const useCovidData = (city) => {
-  const context = useContext(CovidDataContext);
-
+function useCovidData() {
+  const context = React.useContext(CovidDataContext);
+  if (!context) {
+    throw new Error(`useCount must be used within a HotelProvider`);
+  }
   return context;
-};
-
-export default function CovidDataProvider({ city, props }) {
-  return <CovidDataContext.Provider value={{}} {...props} />;
 }
+
+function CovidDataProvider(props) {
+  const [covidData, setCovidData] = React.useState([]);
+
+  React.useEffect(() => {
+    async function fetchData() {
+      const data = await fetch(`${COVID_API_URL}/covidStatistics`);
+      const json = await data.json();
+      setCovidData(json);
+    }
+
+    fetchData();
+  }, []);
+
+  const value = React.useMemo(
+    () => [covidData, setCovidData],
+    [covidData, setCovidData]
+  );
+
+  return <CovidDataContext.Provider value={value} {...props} />;
+}
+
+export { CovidDataProvider, useCovidData };
