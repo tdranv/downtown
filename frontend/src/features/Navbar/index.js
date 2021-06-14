@@ -18,6 +18,7 @@ import {
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import { useEffect, useState } from "react";
 import { EVENTS_API_URL } from "../../constants";
+import { COMMENTS_API_URL } from "../../constants";
 import { Link as RouteLink } from "react-router-dom";
 import firebase from "firebase";
 import "firebase/auth";
@@ -75,49 +76,62 @@ export default function Navbar() {
             onClick={isOpen ? onClose : onOpen}
           />
           <HStack spacing={8} alignItems={"center"}>
-            <Box>Logo</Box>
             <HStack
               as={"nav"}
               spacing={4}
               display={{ base: "none", md: "flex" }}
             >
-              {Links.map((link) => (
-                <NavLink key={link}>{link}</NavLink>
-              ))}
+              <Link
+                px={2}
+                py={1}
+                rounded={"md"}
+                _hover={{
+                  textDecoration: "none",
+                  bg: useColorModeValue("gray.200", "gray.700"),
+                }}
+                href={"/"}
+              >
+                Home
+              </Link>
+              <Link
+                px={2}
+                py={1}
+                rounded={"md"}
+                _hover={{
+                  textDecoration: "none",
+                  bg: useColorModeValue("gray.200", "gray.700"),
+                }}
+                href={`${COMMENTS_API_URL}/rss`}
+              >
+                RSS
+              </Link>
             </HStack>
           </HStack>
           <Flex alignItems={"center"}>
-            <Box p={4} style={{ float: "right" }}>
+            <Box pr={50} style={{ float: "right" }}>
               {weatherData && weatherData !== null
                 ? `Currently in Sofia it feels like ${weatherData.main.feels_like}°C`
                 : null}
             </Box>
-            <Menu>
-              <MenuButton
-                as={Button}
-                rounded={"full"}
-                variant={"link"}
-                cursor={"pointer"}
-              >
+            {!userData ? (
+              <RouteLink to="/login">Login</RouteLink>
+            ) : (
+              <HStack spacing={2} alignItems={"center"}>
                 <Avatar
                   size={"sm"}
                   src={
-                    "https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9"
+                    "https://thekindlife.com/wp-content/uploads/2020/08/bill-stephan-og0C_9Mz6RA-unsplash.jpg"
                   }
                 />
-              </MenuButton>
-              <MenuList>
-                <MenuItem>Link 1</MenuItem>
-                <MenuItem>Link 2</MenuItem>
-                <MenuDivider />
-                <MenuItem>Link 3</MenuItem>
-              </MenuList>
-            </Menu>
-            {!userData ? (
-            <RouteLink to="/login">
-              Login
-            </RouteLink>) :
-            <h2>{userData.displayName} (<Link href="#" onClick={ () => firebase.auth().signOut() }>Logout</Link>)</h2>}
+                <h2>
+                  {userData.displayName} (
+                  <Link href="#" onClick={() => firebase.auth().signOut()}>
+                    Logout
+                  </Link>
+                  )
+                </h2>
+              </HStack>
+            )}
           </Flex>
         </Flex>
 
