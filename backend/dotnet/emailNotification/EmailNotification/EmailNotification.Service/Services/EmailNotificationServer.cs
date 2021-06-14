@@ -44,9 +44,6 @@ namespace EmailNotification.Service.Models
                     Console.WriteLine("Exception caught in CreateTestMessage2(): {0}", ex.ToString());
                 }
             }
-
-            ////TODO: add credentials
-            //smtpClient.UseDefaultCredentials = false;
         }
 
         private string BuildMailBody(IEnumerable<EventModel> events)
